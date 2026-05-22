@@ -1,0 +1,69 @@
+<div class="peliculas-container">
+ 
+  <!-- Header -->
+  <div class="peliculas-header">
+    <span class="titulo">LISTA DE PELÍCULAS RECOMENDADAS</span>
+    <a href="#" class="explorar-btn">EXPLORAR ESTRENOS</a>
+  </div>
+ 
+  <!-- Loading -->
+  <div *ngIf="cargando" class="loading-container">
+    <div class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="text-light mt-2">Cargando películas...</p>
+  </div>
+ 
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger m-3" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+  </div>
+ 
+  <!-- Grid de películas -->
+  <div *ngIf="!cargando && !error" class="movies-grid">
+    <div class="movie-card" *ngFor="let peli of peliculas">
+ 
+      <!-- Imagen -->
+      <div class="movie-img-wrapper">
+        <img
+          [src]="peli.image"
+          [alt]="peli.title"
+          class="movie-img"
+          onerror="this.src='assets/img/no-poster.jpg'"
+        />
+        <span class="movie-rank">#{{ peli.rank }}</span>
+      </div>
+ 
+      <!-- Info -->
+      <div class="movie-body">
+        <h3 class="movie-title">{{ peli.title | uppercase }}</h3>
+        <p class="movie-desc">Desc: {{ peli.description }}</p>
+ 
+        <!-- Géneros -->
+        <div class="genres-container">
+          <span class="genero-label">Gén:</span>
+          <span
+            *ngFor="let genero of peli.genre"
+            [ngClass]="getBadgeClass(genero)"
+            class="genre-badge"
+          >
+            {{ genero }}
+          </span>
+        </div>
+ 
+        <!-- Año e IMDB rating -->
+        <div class="movie-meta">
+          <span class="meta-item">
+            <i class="bi bi-calendar3"></i> {{ peli.year }}
+          </span>
+          <span class="meta-item" *ngIf="peli.imdbRating">
+            <i class="bi bi-star-fill text-warning"></i> {{ peli.imdbRating }}
+          </span>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+</div>
+ 
