@@ -1,0 +1,61 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">💱 Conversor de Divisas</h4>
+        </div>
+        <div class="card-body">
+
+          <!-- Monto -->
+          <div class="mb-3">
+            <label class="form-label">Cantidad</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="monto"
+              placeholder="Ingresá un monto"
+              min="0"
+            />
+          </div>
+
+          <!-- Moneda origen -->
+          <div class="mb-3">
+            <label class="form-label">De</label>
+            <select class="form-select" [(ngModel)]="monedaDesde">
+              <option *ngFor="let m of monedas" [value]="m.code">{{ m.name }}</option>
+            </select>
+          </div>
+
+          <!-- Moneda destino -->
+          <div class="mb-3">
+            <label class="form-label">A</label>
+            <select class="form-select" [(ngModel)]="monedaHasta">
+              <option *ngFor="let m of monedas" [value]="m.code">{{ m.name }}</option>
+            </select>
+          </div>
+
+          <!-- Botón -->
+          <div class="d-grid">
+            <button class="btn btn-primary" (click)="convertir()" [disabled]="cargando">
+              <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+              Convertir →
+            </button>
+          </div>
+
+          <!-- Resultado -->
+          <div *ngIf="resultado !== null" class="alert alert-success mt-3 text-center">
+            <strong>{{ monto }} {{ monedaDesde }}</strong> =
+            <strong>{{ resultado | number:'1.2-2' }} {{ monedaHasta }}</strong>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="error" class="alert alert-danger mt-3 text-center">
+            {{ error }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
